@@ -1,0 +1,38 @@
+﻿
+
+@{
+    ViewData["Title"] = "Update";
+}
+@model ProductUpdateViewModel
+<h1>Update</h1>
+<div class="col-md-4 justify-content-center">
+      <form asp-controller="Products" asp-action="Update" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ImagePath" />
+        <div class="form-group mb-3">
+            <img style="width:50px; height:50px;" src="@(String.IsNullOrEmpty(Model.ImagePath) ? "/images/not-found-image.jpg" : "/images/"+Model.ImagePath )" />
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Name">Name:</label>
+            <input type="text" id="Name" name="Name" asp-for="Name"/>
+        </div>
+        <div class="form-group mb-3">
+            <label>Price:</label>
+            <input type="text" name="Price" asp-for="Price"/>
+        </div>
+        <div class="form-group mb-3">
+            <label>Stock:</label>
+            <input type="number" name="Stock" asp-for="Stock"/>
+        </div>
+        <div class="form-group mb-3">
+            <label for="formFileLg" class="form-label">Ürün Resim</label>
+            <input class="form-control form-control-lg" asp-for="Image" type="file">
+
+        </div>
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </form>
+    <a asp-controller="Products" asp-action="Back">
+        <button class="btn btn-primary">Geri</button>
+    </a>
+</div>
+

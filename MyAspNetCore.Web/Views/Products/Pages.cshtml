@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewData["Title"] = "Pages";
+}
+@model List<ProductViewModel>
+<h1>Pages</h1>
+
+Sayfa: @ViewBag.page
+Ürün miktarı: @ViewBag.pagesize
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				İtem Id:
+			</th>
+			<th>
+				İtem Adı:
+			</th>
+			<th>
+				İtem Fiyatı:
+			</th>
+			<th>
+				İtem Stoğu:
+			</th>
+			<th>
+				İşlemler:
+			</th>
+			<th>
+				<a asp-controller="Products" asp-action="Add">
+					<button class="btn btn-primary">Ekleme</button>
+				</a>
+			</th>
+			<th>
+				İtem sayısı: @ViewData["Count"]
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@item.Id
+				</td>
+				<td>
+					@item.Name
+				</td>
+				<td>
+					@item.Price TL
+				</td>
+				<td>
+					@item.Stock tane
+				</td>
+				<td>
+					<a asp-controller="Products" asp-action="Remove" asp-route-id="@item.Id">
+						<button class="btn btn-primary">Silme</button>
+					</a>
+					<a asp-controller="Products" asp-action="Update" asp-route-id="@item.Id">
+						<button class="btn btn-primary">Güncelleme</button>
+					</a>
+					<a asp-controller="Products" asp-action="GetById" asp-route-productid="@item.Id"><button class="btn btn-primary">Detaylar</button></a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
