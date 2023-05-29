@@ -13,6 +13,7 @@ using MyAspNetCore.Web.ViewModels;
 namespace MyAspNetCore.Web.Controllers
 {
 
+    [Route("[controller]/[action]")]
     public class ProductsController : Controller
 	{
 		private readonly AppDbContext _appContext;
@@ -27,6 +28,7 @@ namespace MyAspNetCore.Web.Controllers
 			_fileProvider = provider;
 
 		}
+
 		public IActionResult Index([FromServices]IHelper helper2)// bunu dışarda tanımladığımız _helper ile gerçekleme yapıp nesne üretebiliriz.
 		{
 			List<ProductViewModel> products = _appContext.Products.Include(x => x.Category).Select(x => new ProductViewModel()
@@ -74,8 +76,6 @@ namespace MyAspNetCore.Web.Controllers
 		{
             var categories = _appContext.Category.ToList();
             ViewBag.CategorySelect = new SelectList(categories, "Id", "Name");
-			var model = new ProductViewModel();
-            return View(model);
 		}
 
 
@@ -119,17 +119,14 @@ namespace MyAspNetCore.Web.Controllers
 					TempData["status"] = "Ürün başarıyla eklendi.";
 					return RedirectToAction("Index");
 				} 
-				catch (Exception)
 				{
-                    ModelState.AddModelError("", "Ürün eklenirken bir hata oluştu.");
-                }
+				}
 			}
 
 		    var categories = _appContext.Category.ToList();
 
 			ViewBag.CategorySelect = new SelectList(categories, "Id", "Name");
 
-			return View(newProduct);
 			
 		}
 

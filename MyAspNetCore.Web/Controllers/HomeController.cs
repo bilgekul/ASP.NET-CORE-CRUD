@@ -6,6 +6,8 @@ using System.Diagnostics;
 
 namespace MyAspNetCore.Web.Controllers
 {
+
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
