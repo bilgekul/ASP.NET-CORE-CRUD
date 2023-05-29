@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@model List<ProductViewModel>;
+<h1>Ürünler</h1>
+<h2>@ViewData["UpperText"]</h2>
+@if(TempData["status"] != null)
+{
+	<div class="alert alert-primary" role="alert">
+		@TempData["status"]
+	</div>
+}
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				İtem Id:
+			</th>
+			<th>
+				İtem Kategorisi:
+			</th>
+			<th>
+				İtem Resmi:
+			</th>
+			<th>
+				İtem Adı:
+			</th>
+			<th>
+				İtem Fiyatı:
+			</th>
+			<th>
+				İtem Stoğu:
+			</th>
+			<th>
+				İşlemler:
+			</th>
+			<th>
+				<a asp-controller="Products" asp-action="Add">
+					<button class="btn btn-primary">Ekleme</button>
+				</a>
+			</th>
+			<th>
+				İtem sayısı: @ViewData["Count"]
+			</th>
+		</tr>
+	</thead>
+    <tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+				   <td>
+					  @item.Id
+				   </td>
+				   <td>
+					   @item.CategoryName
+				  </td>
+				  <td>
+					@if(!String.IsNullOrEmpty(item.ImagePath))
+					{
+						<img style="width:50px; height:50px;"  src="/images/@(item.ImagePath)" />
+					}
+					else
+					{
+						<img style="width:50px; height:50px;" src="/images/not-found-image.jpg" />
+					}
+				</td>
+					<td>
+					  @item.Name
+				   </td>
+					<td>
+					   @item.Price TL
+					</td>
+					<td>
+					   @item.Stock tane
+					</td>
+					<td>
+						<a asp-controller="Products" asp-action="Remove" asp-route-id="@item.Id">
+							<button class="btn btn-primary">Silme</button>
+						</a>
+						<a asp-controller="Products" asp-action="Update" asp-route-id="@item.Id">
+							<button class="btn btn-primary">Güncelleme</button>
+						</a>
+					<a asp-controller="Products" asp-action="GetById" asp-route-productid="@item.Id"><button class="btn btn-primary">Detaylar</button></a>
+					</td>
+				</tr>
+			}
+    </tbody>
+</table>
+<a asp-controller="Products" asp-action="Pages" asp-route-page="1" asp-route-pagesize="3">Birinci sayfadan 3 Ürün ver</a>
+<a asp-controller="Products" asp-action="Pages" asp-route-page="2" asp-route-pagesize="3">İkinci sayfadan 3 Ürün ver</a>
+<a asp-controller="Products" asp-action="Pages" asp-route-page="3" asp-route-pagesize="4">Ücüncü sayfadan 4 Ürün ver</a>
+
+

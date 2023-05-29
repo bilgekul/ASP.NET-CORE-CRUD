@@ -1,0 +1,25 @@
+﻿
+@using MyAspNetCore.Web.ViewModels;
+@model ProductListPartialViewModel
+
+<table class="table table-success table-striped">
+<thead>
+	<tr>
+		<th>İsim:</th>
+		<th>Fiyat:</th>
+	</tr>
+</thead>
+<tbody>
+		@foreach(var item in Model.Products)
+		{
+			<tr>
+				<td>
+					@item.Name
+				</td>
+				<td>
+					@item.Price
+				</td>
+			</tr>
+		}
+</tbody>
+</table>
