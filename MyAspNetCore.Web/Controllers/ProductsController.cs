@@ -76,6 +76,8 @@ namespace MyAspNetCore.Web.Controllers
 		{
             var categories = _appContext.Category.ToList();
             ViewBag.CategorySelect = new SelectList(categories, "Id", "Name");
+
+			return View();
 		}
 
 
@@ -88,6 +90,8 @@ namespace MyAspNetCore.Web.Controllers
 			//var price = decimal.Parse(HttpContext.Request.Form["Price"].ToString());
 			//var stock = int.Parse(HttpContext.Request.Form["Stock"].ToString());
 			//var newProduct = new Product() { Name=Name, Price=Price, Stock=Stock}; // 2.Yöntem Parametre ile gelecek req.body içinden karşılık gelen ifadeleri mapleme yapabiliriz.
+
+			IActionResult result;
 
 			if (ModelState.IsValid)
 			{
@@ -118,15 +122,23 @@ namespace MyAspNetCore.Web.Controllers
 
 					TempData["status"] = "Ürün başarıyla eklendi.";
 					return RedirectToAction("Index");
-				} 
-				{
 				}
+				catch(Exception)
+				{
+                    ModelState.AddModelError("", "Ürün eklenirken bir hata oluştu.");
+                    result = View(newProduct); // Hatanın olduğu durumda aynı sayfayı döndür
+                }
 			}
+            else
+            {
+                result = View(newProduct); // Geçersiz model durumunda aynı sayfayı döndür
+            }
 
-		    var categories = _appContext.Category.ToList();
+            var categories = _appContext.Category.ToList();
 
 			ViewBag.CategorySelect = new SelectList(categories, "Id", "Name");
 
+			return result;
 			
 		}
 
